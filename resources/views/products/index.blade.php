@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Product List')
+
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
@@ -11,12 +13,12 @@
                         <div id="alert-success" class="alert alert-success" style="display: none;">
                             Product deleted successfully!
                         </div>
-                        <a href="{{ route('products.create') }}" class="btn btn-success">Add Task</a>
+                        <a href="{{ route('products.create') }}" class="btn btn-success mb-3">Add Product</a>
                         <div class="table-responsive">
                             <table class="table table-bordered table-sm" id="products-table">
                                 <thead class="text-center text-white" style="background-color:#405189;">
                                     <tr>
-                                        <th width="5%" class="align-middle">BIL</th>
+                                        <th width="5%" class="align-middle">NO</th>
                                         <th width="" class="align-middle">NAME</th>
                                         <th width="" class="align-middle">PRICE (RM)</th>
                                         <th width="" class="align-middle">DETAILS</th>
@@ -32,19 +34,13 @@
                                             <td>{{ $product->product_price }}</td>
                                             <td>{{ $product->product_desc }}</td>
                                             <td>{{ $product->publish === 1 ? 'Yes' : 'No' }}</td>
-                                            <td class="d-flex flex-row bd-highlight mb-3">
-                                                <div>
-                                                    <button type="button" class="btn btn-info proview"
-                                                        data-id="{{ $product->id }}">Show</button>
-                                                </div>
-                                                <div>
-                                                    <a href="{{ route('products.edit', $product->id) }}"
-                                                        class="btn btn-primary proedit">Edit</a>
-                                                </div>
-                                                <div>
-                                                    <button type="button" class="btn btn-danger prodel"
-                                                        data-id="{{ $product->id }}">Delete</button>
-                                                </div>
+                                            <td class="d-flex flex-row bd-highlight mb-3 justify-content-center gap-3">
+                                                <a href="{{ route('products.view', $product->id) }}"
+                                                    class="btn btn-info proview">Show</a>
+                                                <a href="{{ route('products.edit', $product->id) }}"
+                                                    class="btn btn-primary proedit">Edit</a>
+                                                <button type="button" class="btn btn-danger prodel"
+                                                    data-id="{{ $product->id }}">Delete</button>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -111,12 +107,6 @@
                     }
                 });
             }
-        });
-
-        // Handle view and edit button click
-        $(document).on('click', '.proview', function() {
-            const productId = $(this).data('id');
-            window.location.href = `/products-view/${productId}`;
         });
     </script>
 @endsection

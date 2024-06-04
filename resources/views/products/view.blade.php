@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'View')
+@section('title', 'View Product')
 
 @section('content')
     <div class="container">
@@ -20,24 +20,22 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        @foreach ($products as $product)
-                            <div class="row">
-                                <div class="col-lg-2 fw-bold">Name</div>
-                                <div class="col-lg-10">: {{ $product->product_name }}</div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-2 fw-bold">Price</div>
-                                <div class="col-lg-10">: RM {{ $product->product_price }}</div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-2 fw-bold">Details</div>
-                                <div class="col-lg-10">: {{ $product->product_desc }}</div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-2 fw-bold">Publish</div>
-                                <div class="col-lg-10">: {{ $product->publish === 1 ? 'Yes' : 'No' }}</div>
-                            </div>
-                        @endforeach
+                        <div class="row">
+                            <div class="col-lg-2 fw-bold">Name</div>
+                            <div class="col-lg-10">: {{ $product->product_name }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-2 fw-bold">Price</div>
+                            <div class="col-lg-10">: RM {{ $product->product_price }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-2 fw-bold">Details</div>
+                            <div class="col-lg-10">: {{ $product->product_desc }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-2 fw-bold">Publish</div>
+                            <div class="col-lg-10">: {{ $product->publish === 1 ? 'Yes' : 'No' }}</div>
+                        </div>
                     </div>
 
                 </div>

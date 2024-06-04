@@ -84,6 +84,13 @@
         </nav>
 
         <main class="py-4">
+            @if (session()->has('success'))
+                <div id="myAlert" class="alert alert-success alert-dismissible fade show text-center" role="alert">
+                    {{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
+            <h1 class="text-center">@yield('title')</h1>
             @yield('content')
         </main>
     </div>

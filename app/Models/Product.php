@@ -13,9 +13,4 @@ class Product extends Model
     {
         return self::orderBy('product_name')->get();
     }
-
-    public static function getProduct($id)
-    {
-        return self::where('id', $id)->get();
-    }
 }

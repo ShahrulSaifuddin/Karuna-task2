@@ -26,12 +26,10 @@ class ProductController extends Controller
         return view('products.create');
     }
 
-    public function view($id)
+    public function view(Product $product)
     {
-        $products = Product::getProduct($id);
-
         // Pass the products to the view
-        return view('products.view', compact('products'));
+        return view('products.view', compact('product'));
     }
 
     public function store(ProductRequest $request)
