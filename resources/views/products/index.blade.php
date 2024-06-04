@@ -32,13 +32,19 @@
                                             <td>{{ $product->product_price }}</td>
                                             <td>{{ $product->product_desc }}</td>
                                             <td>{{ $product->publish === 1 ? 'Yes' : 'No' }}</td>
-                                            <td>
-                                                <button type="button" class="btn btn-info proview"
-                                                    data-id="{{ $product->id }}">Show</button>
-                                                <button type="button" class="btn btn-primary proedit"
-                                                    data-id="{{ $product->id }}">Edit</button>
-                                                <button type="button" class="btn btn-danger prodel"
-                                                    data-id="{{ $product->id }}">Delete</button>
+                                            <td class="d-flex flex-row bd-highlight mb-3">
+                                                <div>
+                                                    <button type="button" class="btn btn-info proview"
+                                                        data-id="{{ $product->id }}">Show</button>
+                                                </div>
+                                                <div>
+                                                    <a href="{{ route('products.edit', $product->id) }}"
+                                                        class="btn btn-primary proedit">Edit</a>
+                                                </div>
+                                                <div>
+                                                    <button type="button" class="btn btn-danger prodel"
+                                                        data-id="{{ $product->id }}">Delete</button>
+                                                </div>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -111,11 +117,6 @@
         $(document).on('click', '.proview', function() {
             const productId = $(this).data('id');
             window.location.href = `/products-view/${productId}`;
-        });
-
-        $(document).on('click', '.proedit', function() {
-            const productId = $(this).data('id');
-            window.location.href = `/products-edit/${productId}`;
         });
     </script>
 @endsection

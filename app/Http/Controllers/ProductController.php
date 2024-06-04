@@ -51,30 +51,16 @@ class ProductController extends Controller
         //     ->with('success', 'Task deleted successfully');
     }
 
-    public function edit($id)
+    public function update(Product $product, ProductRequest $request)
     {
-        $products = Product::getProduct($id)->first();
+        $product->update($request->validated());
 
-        // Pass the products to the view
-        return view('products.edit', compact('products'));
+        return redirect()->route('products.view', ['product' => $product->id])
+            ->with('success', 'Product updated successfully!');
     }
 
-    public function update(Request $request, $id)
+    public function edit(Product $product)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'price' => 'required|numeric',
-            'desc' => 'required|string',
-            'publish' => 'required|boolean'
-        ]);
-
-        $product = Product::findOrFail($id);
-        $product->product_name = $request->input('name');
-        $product->product_price = $request->input('price');
-        $product->product_desc = $request->input('desc');
-        $product->publish = $request->input('publish');
-        $product->save();
-
-        return response()->json(['success' => true]);
+        return view('products.edit', compact('product'));
     }
 }

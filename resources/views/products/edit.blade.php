@@ -1,102 +1,72 @@
 @extends('layouts.app')
 
-@section('title', 'Edit Product')
+{{-- @section('title', 'Add Product') --}}
 
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <h1>{{ __('Show Products') }}</h1>
-                            </div>
-                            <div class="col-lg-6" align="right">
-                                <a href="{{ route('products.index') }}" class="btn btn-primary">
-                                    {{ __('Back') }}
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div id="alert-success" class="alert alert-success" style="display: none;">
-                            Product updated successfully!
-                        </div>
+                    <div class="card-header">{{ __('Add New Product') }}</div>
 
-                        <form id="product-form">
+                    <div class="card-body">
+                        <form method="POST" action="{{ route('products.update', $product->id) }}">
                             @csrf
                             @method('PUT')
-                            <div class="row">
-                                <div class="col-lg-10">
-                                    <font class="fw-bold">Name :</font>
-                                    <input type="text" class="form-control" name="name"
-                                        value="{{ $products->product_name }}">
-                                </div>
+                            <div class="form-group">
+                                <label for="product_name">{{ __('Product Name') }}</label>
+                                <input type="text" class="form-control @error('product_name') is-invalid @enderror"
+                                    id="product_name" name="product_name" value="{{ $product->product_name }}" required>
+                                @error('product_name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
-                            <div class="row" style="padding-top: 20px;">
-                                <div class="col-lg-10">
-                                    <font class="fw-bold">Price (RM) :</font>
-                                    <input type="text" class="form-control" name="price"
-                                        value="{{ $products->product_price }}">
-                                </div>
+
+                            <div class="form-group">
+                                <label for="product_price">{{ __('Product Price (RM)') }}</label>
+                                <input type="number" step="0.01"
+                                    class="form-control @error('product_price') is-invalid @enderror" id="product_price"
+                                    name="product_price" value="{{ $product->product_price }}" required>
+                                @error('product_price')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
-                            <div class="row" style="padding-top: 20px;">
-                                <div class="col-lg-10">
-                                    <font class="fw-bold">Details :</font>
-                                    <textarea class="form-control" name="desc">{{ $products->product_desc }}</textarea>
-                                </div>
+
+                            <div class="form-group">
+                                <label for="product_desc">{{ __('Product Details') }}</label>
+                                <textarea class="form-control @error('product_desc') is-invalid @enderror" id="product_desc" name="product_desc"
+                                    rows="3" required>{{ $product->product_desc }}</textarea>
+                                @error('product_desc')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
-                            <div class="row" style="padding-top: 20px;">
-                                <div class="col-lg-10">
-                                    <font class="fw-bold">Publish :</font>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" id="publishYes" name="publish"
-                                            value="1" {{ $products->publish === 1 ? 'checked' : '' }}>
-                                        <label class="form-check-label" for="publishYes">Yes</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" id="publishNo" name="publish"
-                                            value="0" {{ $products->publish === 0 ? 'checked' : '' }}>
-                                        <label class="form-check-label" for="publishNo">No</label>
-                                    </div>
-                                </div>
+
+                            <div class="form-group">
+                                <label for="publish">{{ __('Publish') }}</label>
+                                <select class="form-control mb-1 @error('publish') is-invalid @enderror" id="publish"
+                                    name="publish" required>
+                                    <option value="1" {{ $product->publish == '1' ? 'selected' : '' }}>Yes</option>
+                                    <option value="0" {{ $product->publish == '0' ? 'selected' : '' }}>No</option>
+                                </select>
+                                @error('publish')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
-                            <div class="row" style="padding-top: 20px;">
-                                <div class="col-lg-10">
-                                    <button type="button" class="btn btn-primary" id="update-button">Update</button>
-                                </div>
-                            </div>
+
+                            <button type="submit" class="btn btn-primary">{{ __('Save Product') }}</button>
+                            <a href="{{ route('products.index') }}" class="btn btn-secondary">{{ __('Cancel') }}</a>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('#update-button').click(function(e) {
-                e.preventDefault();
-
-                var formData = $('#product-form').serialize();
-
-                $.ajax({
-                    url: "{{ route('products.update', $products->id) }}",
-                    method: 'PUT',
-                    data: formData,
-                    success: function(response) {
-                        $('#alert-success').show();
-                        setTimeout(function() {
-                            $('#alert-success').hide();
-                        }, 2000);
-                    },
-                    error: function(response) {
-                        console.log('Error:', response);
-                    }
-                });
-            });
-        });
-    </script>
 @endsection
