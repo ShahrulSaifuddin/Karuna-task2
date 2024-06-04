@@ -22,6 +22,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
+// hello world
+
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 
